@@ -25,8 +25,8 @@ export default class FeedLogger extends Component {
     this.hideTimePicker = () =>
       this.setState({ isDateTimePickerVisible: false });
 
-    this.handleDatePicked = date => {
-      this.setState({ date: Date.parse(date), isDateTimePickerVisible: false });
+    this.handleDatePicked = time => {
+      this.setState({ time: Date.parse(time), isDateTimePickerVisible: false });
     };
 
     this.handleSave = this.handleSave.bind(this);
@@ -34,8 +34,8 @@ export default class FeedLogger extends Component {
 
   handleSave() {
     // TODO: better validation
-    if (this.state.date) {
-      this.props.saveFeed({ date: this.state.date, notes: this.state.notes });
+    if (this.state.time) {
+      this.props.saveFeed({ time: this.state.time, notes: this.state.notes });
     }
   }
 
@@ -47,8 +47,8 @@ export default class FeedLogger extends Component {
           <Button
             onPress={this.showTimePicker}
             title={
-              this.state.date
-                ? handleDate(this.state.date)
+              this.state.time
+                ? handleDate(this.state.time)
                 : "When did feed start?"
             }
             color="#841584"
