@@ -20,7 +20,14 @@ export default class App extends React.Component {
         }
       ] //todo get pre-sorted and grouped from database
     };
+
+    this.handleSaveFeed = this.handleSaveFeed.bind(this);
   }
+
+  handleSaveFeed(obj) {
+    console.log("todo", obj);
+  }
+
   render() {
     return (
       <SafeAreaView
@@ -32,11 +39,7 @@ export default class App extends React.Component {
         <View style={{ flex: 1, alignItems: "center" }}>
           <Title>Boobtracker</Title>
           <LatestFeeds feeds={this.state.feeds} />
-          <FeedLogger
-            saveFeed={() => {
-              console.log("todo");
-            }}
-          />
+          <FeedLogger saveFeed={this.handleSaveFeed} />
         </View>
       </SafeAreaView>
     );

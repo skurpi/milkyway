@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, Button, Text } from "react-native";
+import { View, TextInput, Button } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 import Header from "./Header";
@@ -11,7 +11,9 @@ function handleDate(date) {
 export default class FeedLogger extends Component {
   constructor(props) {
     super(props);
-    this.state = { isDateTimePickerVisible: false, date: "No date selected" };
+    this.state = {
+      isDateTimePickerVisible: false
+    };
 
     this.showTimePicker = () =>
       this.setState({ isDateTimePickerVisible: true });
@@ -22,6 +24,15 @@ export default class FeedLogger extends Component {
     this.handleDatePicked = date => {
       this.setState({ date: date.toString(), isDateTimePickerVisible: false });
     };
+
+    this.handleSave = this.handleSave.bind(this);
+  }
+
+  handleSave() {
+    // TODO: better validation
+    if (this.state.date) {
+      this.props.saveFeed({ date: this.state.date, notes: this.state.notes });
+    }
   }
 
   render() {
@@ -29,20 +40,23 @@ export default class FeedLogger extends Component {
       <>
         <Header>Add feed</Header>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text>{handleDate(this.state.date)}</Text>
           <Button
             onPress={this.showTimePicker}
-            title="Started feeding"
+            title={
+              this.state.date
+                ? handleDate(this.state.date)
+                : "Choose when feeding started"
+            }
             color="#841584"
-            accessibilityLabel="Choose the time that the feeding started"
+            accessibilityLabel="Choose a time for when the feeding started"
           />
           <TextInput
             style={{ height: 40 }}
             placeholder="Extra notes?"
-            onChangeText={text => this.setState({ text })}
+            onChangeText={text => this.setState({ notes: text })}
           />
           <Button
-            onPress={this.props.saveFeed}
+            onPress={this.handleSave}
             title="Save"
             color="#841584"
             accessibilityLabel="Save the details of the feed"
