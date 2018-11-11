@@ -5,7 +5,11 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import Header from "./Header";
 
 function handleDate(date) {
-  return typeof date === "string" ? date : date.toString();
+  return new Date(date).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
 }
 
 export default class FeedLogger extends Component {
@@ -22,7 +26,7 @@ export default class FeedLogger extends Component {
       this.setState({ isDateTimePickerVisible: false });
 
     this.handleDatePicked = date => {
-      this.setState({ date: date.toString(), isDateTimePickerVisible: false });
+      this.setState({ date: Date.parse(date), isDateTimePickerVisible: false });
     };
 
     this.handleSave = this.handleSave.bind(this);
@@ -45,7 +49,7 @@ export default class FeedLogger extends Component {
             title={
               this.state.date
                 ? handleDate(this.state.date)
-                : "Choose when feeding started"
+                : "When did feed start?"
             }
             color="#841584"
             accessibilityLabel="Choose a time for when the feeding started"

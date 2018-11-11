@@ -1,7 +1,9 @@
 import React from "react";
-import { View, SafeAreaView, Platform } from "react-native";
+import { SQLite } from "expo";
 
-import { Title, LatestFeeds, FeedLogger } from "./ui-components";
+import { UI } from "./ui-components";
+
+const db = SQLite.openDatabase("db.db");
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,7 +16,7 @@ export default class App extends React.Component {
           day: "Sunday",
           feeds: [
             { time: "2018-11-10T22:35:00.000Z" },
-            { time: "2018-11-10T16:25:00.000Z", note: "amazing feed" },
+            { time: "2018-11-10T16:25:00.000Z", notes: "amazing feed" },
             { time: "2018-11-10T07:15:00.000Z" }
           ]
         }
@@ -22,26 +24,39 @@ export default class App extends React.Component {
     };
 
     this.handleSaveFeed = this.handleSaveFeed.bind(this);
+    this.updateFeeds = this.updateFeeds.bind(this);
+  }
+
+  componentDidMount() {
+    db.transaction(tx => {
+      tx.executeSql(
+        "create table if not exists feeds (id integer primary key not null, time int, notes text);"
+      );
+    });
   }
 
   handleSaveFeed(obj) {
-    console.log("todo", obj);
+    db.transaction(
+      tx => {
+        tx.executeSql("insert into feeds (time, notes) values (?, ?)", [
+          obj.time,
+          obj.notes
+        ]);
+      },
+      null,
+      this.updateFeeds
+    );
+  }
+
+  updateFeeds() {
+    db.transaction(tx => {
+      tx.executeSql("select * from feeds", [], (_, { rows }) =>
+        console.log("did it work?", JSON.stringify(rows))
+      );
+    });
   }
 
   render() {
-    return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          paddingTop: Platform.OS === "android" ? 25 : 0
-        }}
-      >
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Title>Boobtracker</Title>
-          <LatestFeeds feeds={this.state.feeds} />
-          <FeedLogger saveFeed={this.handleSaveFeed} />
-        </View>
-      </SafeAreaView>
-    );
+    return <UI feeds={this.state.feeds} handleSaveFeed={this.handleSaveFeed} />;
   }
 }
