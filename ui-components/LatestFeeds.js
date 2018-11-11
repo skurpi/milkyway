@@ -6,18 +6,22 @@ const colors = ["powderblue", "skyblue", "steelblue"];
 function getColor(number) {
   return colors[number % colors.length];
 }
+
 export default function LatestFeeds({ feeds = [] }) {
   return (
     <>
       <Header>Latest feeds</Header>
       <View style={{ flex: 1, flexDirection: "row" }}>
-        {feeds.map((feed, index) => {
+        {feeds.map((day, index) => {
           return (
             <View
-              key={feed.key}
+              key={day.day}
               style={{ flex: 1, backgroundColor: getColor(index) }}
             >
-              <Text>{feed.day}</Text>
+              <Text>{day.day}</Text>
+              {day.feeds.map(feed => (
+                <Text key={feed.time}>{feed.time}</Text>
+              ))}
             </View>
           );
         })}
