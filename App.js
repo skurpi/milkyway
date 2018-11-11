@@ -30,12 +30,20 @@ export default class App extends React.Component {
   componentDidMount() {
     db.transaction(tx => {
       tx.executeSql(
-        "create table if not exists feeds (id integer primary key not null, time int, notes text);"
+        "create table if not exists feeds (id integer primary key not null, time int, notes text);",
+        error => console.error("failed creating table feeds", error),
+        () => {
+          console.debug(
+            "Successfully created table if it did not exist already"
+          );
+          this.updateFeeds();
+        }
       );
     });
   }
 
   handleSaveFeed(obj) {
+    console.debug("Saving feed", obj);
     db.transaction(
       tx => {
         tx.executeSql("insert into feeds (time, notes) values (?, ?)", [
@@ -43,15 +51,25 @@ export default class App extends React.Component {
           obj.notes
         ]);
       },
-      null,
+      err => console.error("Failed saving feed", err),
       this.updateFeeds
     );
   }
 
   updateFeeds() {
     db.transaction(tx => {
-      tx.executeSql("select * from feeds", [], (_, { rows }) =>
-        console.log("did it work?", JSON.stringify(rows))
+      tx.executeSql(
+        "select * from feeds",
+        [],
+        (_, { rows: { _array } }) => {
+          console.debug(
+            "Successfully fetched the feeds",
+            JSON.stringify(_array)
+          );
+          this.setState({ db: _array });
+          console.warn("TODO: filter and group the feeds"); //TODO
+        },
+        err => console.error("Failed fetching feeds", err)
       );
     });
   }
