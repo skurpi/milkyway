@@ -18,7 +18,9 @@ export default function LatestFeeds({ feeds = [] }) {
               key={day.day}
               style={{ flex: 1, backgroundColor: getColor(index) }}
             >
-              <Text>{day.day}</Text>
+              <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
+                {day.day}
+              </Text>
               {day.feeds.map(feed => (
                 <Text key={feed.time}>{feed.time}</Text>
               ))}
