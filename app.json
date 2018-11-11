@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "feeder",
-    "description": "This project is really great.",
-    "slug": "feeder",
+    "name": "Boobtracker",
+    "description": "Keep a log of when you've last fed your baby.",
+    "slug": "Boobtracker",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
