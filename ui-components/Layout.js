@@ -6,7 +6,7 @@ import Title from "./Title";
 import LatestFeeds from "./LatestFeeds";
 import FeedLogger from "./FeedLogger";
 
-export default function UI({ feeds, handleSaveFeed }) {
+export default function Layout({ feeds, handleSaveFeed }) {
   return (
     <SafeAreaView
       style={{

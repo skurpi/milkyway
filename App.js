@@ -1,7 +1,7 @@
 import React from "react";
 import { SQLite } from "expo";
 
-import { UI } from "./ui-components";
+import { Layout } from "./ui-components";
 
 const db = SQLite.openDatabase("db.db");
 
@@ -75,6 +75,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <UI feeds={this.state.feeds} handleSaveFeed={this.handleSaveFeed} />;
+    return (
+      <Layout feeds={this.state.feeds} handleSaveFeed={this.handleSaveFeed} />
+    );
   }
 }
