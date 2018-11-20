@@ -1,26 +1,49 @@
 import React from "react";
 import { SQLite } from "expo";
+import { groupBy, sortWith, descend, prop } from "ramda";
 
 import { Layout } from "./ui-components";
 
 const db = SQLite.openDatabase("db.db");
+
+function cleanDBOutput(array) {
+  const feedsGroupedByDate = groupBy(
+    feed => new Date(feed.time).toISOString().substring(0, 10),
+    array
+  );
+  const feedsMappedOnKey = Object.keys(feedsGroupedByDate).map(key => ({
+    date: key,
+    feeds: feedsGroupedByDate[key]
+  }));
+
+  const threeLatestDays = sortWith(
+    [descend(prop("date"))],
+    feedsMappedOnKey
+  ).slice(0, 3);
+
+  return threeLatestDays;
+}
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      feeds: [
-        { day: "Monday", feeds: [{ time: "2018-11-11T16:05:00.000Z" }] },
-        {
-          day: "Sunday",
-          feeds: [
-            { time: "2018-11-10T22:35:00.000Z" },
-            { time: "2018-11-10T16:25:00.000Z", notes: "amazing feed" },
-            { time: "2018-11-10T07:15:00.000Z" }
-          ]
-        }
-      ] //todo get pre-sorted and grouped from database
+      feeds: []
+      // feeds: [
+      //   {
+      //     date: "2020-06-14",
+      //     feeds: [{ id: 1, notes: null, time: 1592140073187 }]
+      //   },
+      //   {
+      //     date: "2018-11-13",
+      //     feeds: [{ id: 1, notes: null, time: 1542140073187 }]
+      //   },
+      //   {
+      //     date: "2018-11-12",
+      //     feeds: [{ id: 1, notes: null, time: 1542040073187 }]
+      //   }
+      // ]
     };
 
     this.handleSaveFeed = this.handleSaveFeed.bind(this);
@@ -30,7 +53,9 @@ export default class App extends React.Component {
   componentDidMount() {
     db.transaction(tx => {
       tx.executeSql(
-        "create table if not exists feeds (id integer primary key not null, time int, notes text);",
+        "create table if not exists feeds (id integer primary key not null, time real, notes text);",
+        // "drop table feeds",
+        // "delete from feeds",
         error => console.error("failed creating table feeds", error),
         () => {
           console.debug(
@@ -43,7 +68,6 @@ export default class App extends React.Component {
   }
 
   handleSaveFeed(obj) {
-    console.debug("Saving feed", obj);
     db.transaction(
       tx => {
         tx.executeSql("insert into feeds (time, notes) values (?, ?)", [
@@ -66,8 +90,9 @@ export default class App extends React.Component {
             "Successfully fetched the feeds",
             JSON.stringify(_array)
           );
-          this.setState({ db: _array });
-          console.warn("TODO: filter and group the feeds"); //TODO
+          const cleanedFeeds = cleanDBOutput(_array);
+          console.debug("feeds", cleanedFeeds);
+          this.setState({ feeds: cleanedFeeds });
         },
         err => console.error("Failed fetching feeds", err)
       );

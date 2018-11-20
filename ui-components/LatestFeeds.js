@@ -15,11 +15,11 @@ export default function LatestFeeds({ feeds = [] }) {
         {feeds.map((day, index) => {
           return (
             <View
-              key={day.day}
+              key={day.date}
               style={{ flex: 1, backgroundColor: getColor(index) }}
             >
               <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
-                {day.day}
+                {day.date}
               </Text>
               {day.feeds.map(feed => (
                 <Text key={feed.time}>{feed.time}</Text>
