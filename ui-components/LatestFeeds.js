@@ -16,10 +16,12 @@ function getColor(number) {
   return colors[number % colors.length];
 }
 function extractHours(time) {
-  return new Date(time).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  return new Date(time)
+    .toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+    .split(/(\d{2}:\d{2})/)[1];
 }
 
 export default function LatestFeeds({ feeds = [] }) {
@@ -40,7 +42,9 @@ export default function LatestFeeds({ feeds = [] }) {
                 {day.date}
               </Text>
               {day.feeds.map(feed => (
-                <Text key={feed.time}>{extractHours(feed.time)}</Text>
+                <Text key={feed.time} style={{ marginLeft: 10 }}>
+                  {extractHours(feed.time)}
+                </Text>
               ))}
             </View>
           );
