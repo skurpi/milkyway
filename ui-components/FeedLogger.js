@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, Button } from "react-native";
+import { KeyboardAvoidingView, TextInput, Button } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 import Header from "./Header";
@@ -48,8 +48,22 @@ export default class FeedLogger extends Component {
   render() {
     return (
       <>
-        <Header>Add feed</Header>
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <KeyboardAvoidingView
+          style={{
+            flex: 1,
+            alignItems: "center",
+            backgroundColor: "white",
+            width: "100%"
+          }}
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: "center",
+            backgroundColor: "white",
+            width: "100%"
+          }}
+          behavior="position"
+        >
+          <Header>Add feed</Header>
           <Button
             onPress={this.showTimePicker}
             title={
@@ -74,7 +88,7 @@ export default class FeedLogger extends Component {
             color="#841584"
             accessibilityLabel="Save the details of the feed"
           />
-        </View>
+        </KeyboardAvoidingView>
         <DateTimePicker
           mode={"time"}
           isVisible={this.state.isDateTimePickerVisible}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import Header from "./Header";
 
 const colors = ["powderblue", "skyblue", "steelblue"];
@@ -28,7 +28,7 @@ export default function LatestFeeds({ feeds = [] }) {
   return (
     <>
       <Header>Latest feeds</Header>
-      <View style={{ flex: 1, flexDirection: "row" }}>
+      <View style={{ flex: 3, flexDirection: "row" }}>
         {feeds.map((day, index) => {
           return (
             <View
@@ -42,9 +42,22 @@ export default function LatestFeeds({ feeds = [] }) {
                 {day.date}
               </Text>
               {day.feeds.map(feed => (
-                <Text key={feed.time} style={{ marginLeft: 10 }}>
-                  {extractHours(feed.time)}
-                </Text>
+                <React.Fragment key={feed.time}>
+                  <Text style={{ marginLeft: 10 }}>
+                    {extractHours(feed.time)}
+                  </Text>
+                  {feed.notes && (
+                    <Text style={{ marginLeft: 20, fontStyle: "italic" }}>
+                      - {feed.notes}
+                    </Text>
+                  )}
+                  <View
+                    style={{
+                      borderBottomColor: "black",
+                      borderBottomWidth: StyleSheet.hairlineWidth
+                    }}
+                  />
+                </React.Fragment>
               ))}
             </View>
           );
