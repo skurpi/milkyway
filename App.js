@@ -13,7 +13,7 @@ function cleanDBOutput(array) {
   );
   const feedsMappedOnKey = Object.keys(feedsGroupedByDate).map(key => ({
     date: key,
-    feeds: feedsGroupedByDate[key]
+    feeds: feedsGroupedByDate[key].sort((a, b) => a.time - b.time)
   }));
 
   const threeLatestDays = sortWith(
