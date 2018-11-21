@@ -3,6 +3,15 @@ import { Text, View } from "react-native";
 import Header from "./Header";
 
 const colors = ["powderblue", "skyblue", "steelblue"];
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+]; // because react native on android runs old javascriptCore
 function getColor(number) {
   return colors[number % colors.length];
 }
@@ -24,6 +33,9 @@ export default function LatestFeeds({ feeds = [] }) {
               key={day.date}
               style={{ flex: 1, backgroundColor: getColor(index) }}
             >
+              <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
+                {days[new Date(day.date).getDay()]}
+              </Text>
               <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
                 {day.date}
               </Text>
