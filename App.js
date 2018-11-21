@@ -30,20 +30,6 @@ export default class App extends React.Component {
 
     this.state = {
       feeds: []
-      // feeds: [
-      //   {
-      //     date: "2020-06-14",
-      //     feeds: [{ id: 1, notes: null, time: 1592140073187 }]
-      //   },
-      //   {
-      //     date: "2018-11-13",
-      //     feeds: [{ id: 1, notes: null, time: 1542140073187 }]
-      //   },
-      //   {
-      //     date: "2018-11-12",
-      //     feeds: [{ id: 1, notes: null, time: 1542040073187 }]
-      //   }
-      // ]
     };
 
     this.handleSaveFeed = this.handleSaveFeed.bind(this);
@@ -67,7 +53,7 @@ export default class App extends React.Component {
     });
   }
 
-  handleSaveFeed(obj) {
+  handleSaveFeed(obj, successCallback) {
     db.transaction(
       tx => {
         tx.executeSql("insert into feeds (time, notes) values (?, ?)", [
@@ -76,7 +62,10 @@ export default class App extends React.Component {
         ]);
       },
       err => console.error("Failed saving feed", err),
-      this.updateFeeds
+      () => {
+        this.updateFeeds();
+        successCallback();
+      }
     );
   }
 

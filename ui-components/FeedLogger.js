@@ -35,7 +35,13 @@ export default class FeedLogger extends Component {
   handleSave() {
     // TODO: better validation
     if (this.state.time) {
-      this.props.saveFeed({ time: this.state.time, notes: this.state.notes });
+      this.props.saveFeed(
+        { time: this.state.time, notes: this.state.notes },
+        () => {
+          this.setState({ time: undefined });
+          this.textInput.clear();
+        }
+      );
     }
   }
 
@@ -55,6 +61,9 @@ export default class FeedLogger extends Component {
             accessibilityLabel="Choose a time for when the feeding started"
           />
           <TextInput
+            ref={input => {
+              this.textInput = input;
+            }}
             style={{ height: 40 }}
             placeholder="Extra notes?"
             onChangeText={text => this.setState({ notes: text })}

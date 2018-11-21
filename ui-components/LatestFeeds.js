@@ -6,6 +6,12 @@ const colors = ["powderblue", "skyblue", "steelblue"];
 function getColor(number) {
   return colors[number % colors.length];
 }
+function extractHours(time) {
+  return new Date(time).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
 
 export default function LatestFeeds({ feeds = [] }) {
   return (
@@ -22,7 +28,7 @@ export default function LatestFeeds({ feeds = [] }) {
                 {day.date}
               </Text>
               {day.feeds.map(feed => (
-                <Text key={feed.time}>{feed.time}</Text>
+                <Text key={feed.time}>{extractHours(feed.time)}</Text>
               ))}
             </View>
           );
