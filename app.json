@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Boobtracker",
+    "name": "Milky way",
     "description": "Keep a log of when you've last fed your baby.",
-    "slug": "Boobtracker",
+    "slug": "milky-way",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
@@ -17,9 +17,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     }

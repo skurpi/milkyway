@@ -1,4 +1,4 @@
-# Boobtracker
+# Milky way
 
 A simple tool for keeping track of how often you have fed your baby. This is specifically designed for parents with infants.
 
@@ -6,7 +6,7 @@ This code is written using a basic React Native application with Expo. More info
 
 ## Current look
 
-<img src="https://github.com/skurpi/boobtracker/blob/master/screenshot.jpg" width="200" alt="Interface screenshot" />
+<img src="https://github.com/skurpi/milkyway/blob/master/screenshot.jpg" width="200" alt="Interface screenshot" />
 
 ## TODO
 

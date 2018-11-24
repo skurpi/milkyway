@@ -15,7 +15,7 @@ export default function Layout({ feeds, handleSaveFeed }) {
       }}
     >
       <View style={{ flex: 1, alignItems: "center" }}>
-        <Title>Boobtracker</Title>
+        <Title>Milky way</Title>
         <LatestFeeds feeds={feeds} />
         <FeedLogger saveFeed={handleSaveFeed} />
       </View>
