@@ -38,7 +38,7 @@ export default class FeedLogger extends Component {
       this.props.saveFeed(
         { time: this.state.time, notes: this.state.notes },
         () => {
-          this.setState({ time: undefined });
+          this.setState({ time: undefined, notes: undefined });
           this.textInput.clear();
         }
       );
