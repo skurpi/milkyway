@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Milky way",
-    "description": "Keep a log of when you've last fed your baby.",
+    "description": "Keep a log of when you last fed your baby.",
     "slug": "milky-way",
     "privacy": "public",
     "sdkVersion": "31.0.0",
@@ -19,7 +19,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.skurpi.milkyway"
+    },
+    "android": {
+      "package": "com.skurpi.milkyway"
     }
   }
 }
