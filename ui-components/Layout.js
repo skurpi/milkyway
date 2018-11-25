@@ -11,7 +11,8 @@ export default function Layout({ feeds, handleSaveFeed }) {
     <SafeAreaView
       style={{
         flex: 1,
-        paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0
+        paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
+        backgroundColor: "white"
       }}
     >
       <View style={{ flex: 1, alignItems: "center" }}>
