@@ -23,7 +23,8 @@
       "bundleIdentifier": "com.skurpi.milkyway"
     },
     "android": {
-      "package": "com.skurpi.milkyway"
+      "package": "com.skurpi.milkyway",
+      "versionCode": "1"
     }
   }
 }
